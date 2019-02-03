@@ -1,6 +1,10 @@
 import tkinter as tk
+from tkinter import *
 from tkinter import ttk
 from ttkthemes import ThemedStyle
+import os, sys
+import arduino_handler as arduino
+
 
 
 class Application(ttk.Frame):
@@ -8,45 +12,65 @@ class Application(ttk.Frame):
     def __init__(self, main_window):
         super().__init__(main_window)
         main_window.title("GUI Audiometer")
-        #main_window.iconbitmap("hear_sound.ico")
-        #main_window.config(bg="red")
+
+        main_window.iconbitmap(os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])),"images/hear_sound.ico"))
+        main_window.config(bg="#595959")
 
         ttk.Style().configure(".", font=('Helvetica', 16), justify=tk.RIGHT)
 
         self.notebook = ttk.Notebook(self)
 
         self.principal_frame = PrincipalFrame(self.notebook)
-        self.notebook.add(self.principal_frame, text="Inicio")
-
-        self.aerea_frame = AereaFrame(self.notebook)
-        self.notebook.add(self.aerea_frame, text="P. Aérea")
-
-        self.osea_frame = OseaFrame(self.notebook)
-        self.notebook.add(self.osea_frame, text="P. Ósea")
-
-        self.logo_frame = LogoFrame(self.notebook)
-        self.notebook.add(self.logo_frame, text="LogoAudiometría")
-
-        self.configuration_frame = ConfigFrame(self.notebook)
-        self.notebook.add(self.configuration_frame, text="Config")
-
-        self.calibración_frame = CalibFrame(self.notebook)
-        self.notebook.add(self.calibración_frame, text="Calibración")
+        self.notebook.add(self.principal_frame, text="Start")
 
         self.notebook.pack(padx=5, pady=5, side="top", fill="both", expand=True)
         self.pack(side="top", fill="both", expand=True)
 
 
-root = tk.Tk()
-root.geometry("800x480")  # Size of the main window
-ThemedStyle(root).set_theme('black')
-# Themes= 'classic', 'ubuntu', 'keramik_alt',
-# 'elegance', 'equilux', 'black', 'default', 'arc',
-# 'radiance', 'plastik', 'aquativo', 'keramik', 'clam',
-# 'winxpblue', 'clearlooks', 'kroc', 'blue', 'alt'
+class PrincipalFrame(ttk.Frame):
 
-## root.attributes('-fullscreen',True)
-app = Application(root)
-app.mainloop()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-#if __name__ == "__main__":
+        self.imageL = tk.PhotoImage(file=os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])),"images/ear_128.png"))
+        self.label_image = tk.Label(self, image=self.imageL)
+        self.label_image.place(x=320, y=0)
+
+        self.label_patient_data = ttk.Label(self, text="Patient Data")
+        self.label_patient_data.place(x=300, y=130)
+
+        text_variable_name = StringVar()
+        self.label_name = ttk.Label(self, text="First and Last Name")
+        self.label_name.place(x=20, y=180)
+        self.entry_name = ttk.Entry(self, textvariable=text_variable_name, font=('Helvetica', 16))
+        self.entry_name.place(x=210, y=180)
+
+        text_variable_age = StringVar()
+        self.label_age = ttk.Label(self, text="Age")
+        self.label_age.place(x=480, y=180)
+        self.entry_age = ttk.Entry(self, textvariable=text_variable_age, font=('Helvetica', 16), width=4)
+        self.entry_age.place(x=540, y=180)
+
+        text_variable_address = StringVar()
+        self.label_address = ttk.Label(self, text="Address")
+        self.label_address.place(x=20, y=230)
+        self.entry_address = ttk.Entry(self, textvariable=text_variable_address, font=('Helvetica', 16))
+        self.entry_address.place(x=120, y=230)
+
+        self.btnExit = ttk.Button(self, text='Exit', command=root.destroy, width=4)
+        self.btnExit.place(x=120, y=280)
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.geometry("800x480")  # Size of the main window
+    ThemedStyle(root).set_theme('black')
+    # Themes= 'classic', 'ubuntu', 'keramik_alt',
+    # 'elegance', 'equilux', 'black', 'default', 'arc',
+    # 'radiance', 'plastik', 'aquativo', 'keramik', 'clam',
+    # 'winxpblue', 'clearlooks', 'kroc', 'blue', 'alt'
+
+    ## root.attributes('-fullscreen',True)
+
+    app = Application(root)
+    app.mainloop()
