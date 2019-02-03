@@ -6,7 +6,6 @@ import os, sys
 import arduino_handler as arduino
 
 
-
 class Application(ttk.Frame):
 
     def __init__(self, main_window):
@@ -62,6 +61,9 @@ class PrincipalFrame(ttk.Frame):
 
 
 if __name__ == "__main__":
+
+    # arduino.initiate_arduino_port()
+
     root = tk.Tk()
     root.geometry("800x480")  # Size of the main window
     ThemedStyle(root).set_theme('black')
