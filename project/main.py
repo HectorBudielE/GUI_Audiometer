@@ -4,7 +4,7 @@ from tkinter import ttk
 from ttkthemes import ThemedStyle
 import os, sys
 import arduino_handler as arduino
-
+import audiogram_canvas
 
 class Application(ttk.Frame):
 
@@ -21,6 +21,9 @@ class Application(ttk.Frame):
 
         self.principal_frame = PrincipalFrame(self.notebook)
         self.notebook.add(self.principal_frame, text="Start")
+
+        self.AirConductionFrame = AirConductionFrame(self.notebook)
+        self.notebook.add(self.AirConductionFrame, text="AC")
 
         self.notebook.pack(padx=5, pady=5, side="top", fill="both", expand=True)
         self.pack(side="top", fill="both", expand=True)
@@ -70,6 +73,12 @@ class AirConductionFrame(ttk.Frame):
         ttk.Style().configure("myred2.TButton", padding=(10, 10, 3, 10), background="#ff0000", justify=tk.CENTER)
         ttk.Style().configure("masking_on.TButton", background="#909090", justify=tk.CENTER)
         ttk.Style().configure("masking_off.TButton", background="#404040", justify=tk.CENTER)
+
+        # Creation of canvas
+        #self.canvas = FigureCanvas(self, width=350, height=200)
+        #self.canvas.grid(row=0, column=0, rowspan=7, padx=10, pady=10)
+
+
 
 if __name__ == "__main__":
 
