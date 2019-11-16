@@ -3,7 +3,6 @@ from tkinter import *
 from tkinter import ttk
 from ttkthemes import ThemedStyle
 import os, sys
-import arduino_handler as arduino
 
 from air_conduction_tab import AirConductionFrame
 import audiogram_canvas
@@ -25,7 +24,7 @@ class Application(ttk.Frame):
         self.notebook.add(self.principal_frame, text="Start")
 
         self.AirConductionFrame = AirConductionFrame(self.notebook)
-        self.notebook.add(self.AirConductionFrame, text="AC")
+        self.notebook.add(self.AirConductionFrame, text="Audiogram")
 
         self.notebook.pack(padx=5, pady=5, side="top", fill="both", expand=True)
         self.pack(side="top", fill="both", expand=True)
