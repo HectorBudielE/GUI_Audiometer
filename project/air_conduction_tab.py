@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from canvas_file import FigureCanvas
 
 class AirConductionFrame(ttk.Frame):
 
@@ -14,5 +15,5 @@ class AirConductionFrame(ttk.Frame):
         ttk.Style().configure("masking_off.TButton", background="#404040", justify=tk.CENTER)
 
         # Creation of canvas
-        #self.canvas = FigureCanvas(self, width=350, height=200)
-        #self.canvas.grid(row=0, column=0, rowspan=7, padx=10, pady=10)
+        self.canvas = FigureCanvas(self, width=350, height=200)
+        self.canvas.grid(row=0, column=0, rowspan=7, padx=10, pady=10)

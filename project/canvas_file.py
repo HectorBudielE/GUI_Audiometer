@@ -1,11 +1,12 @@
+import tkinter as tk
 
 class FigureCanvas(tk.Canvas):
 
-    def __init__(self, x, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         #x = 40  # sets the origin of the table as (x,x)
         self.config(bg="#ffffff")
-
+        x=40
         col=60 # width of the column
         row=26 # height of the row
 
@@ -40,3 +41,61 @@ class FigureCanvas(tk.Canvas):
                           '750 Hz': "Lmark750", '1000 Hz': "Lmark1000", '1500 Hz': "Lmark1500",
                           '2000 Hz': "Lmark2000", '3000 Hz': "Lmark3000", '4000 Hz': "Lmark4000",
                           '6000 Hz': "Lmark6000", '8000 Hz': "Lmark8000"}
+
+        # Creating color rectangles
+        self.create_rectangle(x, x + 10 + (3*row), x + 20 + (6*col), x + 20 + (5*row),
+                             fill="#ffffcc", width=0)
+        self.create_rectangle(x, x + 10 + (5*row), x + 20 + (6*col), x + 20 + (8*row),
+                             fill="#ccccff", width=0)
+        self.create_rectangle(x, x + 10 + (8*row), x + 20 + (6*col), x + 20 +(10*row),
+                             fill="#ffcccc", width=0)
+        self.create_rectangle(x, x + 10 +(10*row), x + 20 + (6*col), x + 20 +(13*row),
+                             fill="#ffb3b3", width=0)
+
+        # Creating columns
+        self.create_line(x, x, x, x + 20 + (13*row), fill="#808080")
+        for i in range(0, 7):
+            self.create_line(x + 10 + (i*col), x, x + 10 + (i*col), x + 20 + (13*row), fill="#808080")
+        for i in range(0, 4):
+            self.create_line(x + 10 +(2.5*col) + (i*col), x, x + 10 + (2.5*col) + (i*col),
+                             x + 20 + (13*row), fill="#808080")
+        self.create_line(x + 20 + (6*col), x, x + 20 + (6*col), x + 20 + (13*row), fill="#808080")
+        # Creating rows
+        self.create_line(x, x, x + 20 + (6*col), x, fill="#808080")
+        for i in range(0, 14):
+            self.create_line(x, x + 10 + (i*row), x + 20 + (6*col), x + 10 + (i*row), fill="#808080")
+        self.create_line(x, x + 20 + (13*row), x + 20 + (6*col), x + 20 + (13*row), fill="#808080")
+
+        self.configure(width=70 + (6*col), height=70 + (13*row))
+
+        # Creating the texts inside the Canvas
+        self.create_text(x + 10 +  (0*col), x - 10, text="125", font=('Helvetica', 9))
+        self.create_text(x + 10 +  (1*col), x - 10, text="250", font=('Helvetica', 9))
+        self.create_text(x + 10 +  (2*col), x - 10, text="500", font=('Helvetica', 9))
+        self.create_text(x + 10 +(2.5*col), x - 10, text="750", font=('Helvetica', 9))
+        self.create_text(x + 10 +  (3*col), x - 10, text= "1K", font=('Helvetica', 9))
+        self.create_text(x + 10 +(3.5*col), x - 10, text="1K5", font=('Helvetica', 9))
+        self.create_text(x + 10 +  (4*col), x - 10, text= "2K", font=('Helvetica', 9))
+        self.create_text(x + 10 +(4.5*col), x - 10, text= "3K", font=('Helvetica', 9))
+        self.create_text(x + 10 +  (5*col), x - 10, text= "4K", font=('Helvetica', 9))
+        self.create_text(x + 10 +(5.5*col), x - 10, text= "6K", font=('Helvetica', 9))
+        self.create_text(x + 10 +  (6*col), x - 10, text= "8K", font=('Helvetica', 9))
+
+        self.create_text(x - 5, x + 10 + (0*row), text="-10", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 + (1*row), text=  "0", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 + (2*row), text= "10", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 + (3*row), text= "20", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 + (4*row), text= "30", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 + (5*row), text= "40", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 + (6*row), text= "50", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 + (7*row), text= "60", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 + (8*row), text= "70", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 + (9*row), text= "80", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 +(10*row), text= "90", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 +(11*row), text="100", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 +(12*row), text="110", font=('Helvetica', 9), anchor='e')
+        self.create_text(x - 5, x + 10 +(13*row), text="120", font=('Helvetica', 9), anchor='e')
+
+        self.create_text(x+3*col, x-15, text="Frecuencias", font=('Helvetica', 9), anchor='s')
+
+        self.create_text(x - 30, x + 10 + (5 * row), text="dB HL", font=('Helvetica', 9), anchor='e',angle=90)
