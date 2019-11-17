@@ -5,7 +5,7 @@ from ttkthemes import ThemedStyle
 import os, sys
 
 from air_conduction_tab import AirConductionFrame
-import audiogram_canvas
+#import audiogram_canvas
 
 class Application(ttk.Frame):
 
