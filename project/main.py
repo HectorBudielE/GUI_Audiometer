@@ -3,9 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from ttkthemes import ThemedStyle
 import os, sys
-
 from air_conduction_tab import AirConductionFrame
-#import audiogram_canvas
 
 class Application(ttk.Frame):
 
@@ -65,8 +63,6 @@ class PrincipalFrame(ttk.Frame):
 
 
 if __name__ == "__main__":
-
-    # arduino.initiate_arduino_port()
 
     root = tk.Tk()
     root.geometry("800x480")  # Size of the main window

@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from canvas_file import FigureCanvas
+import os, sys
 
 class AirConductionFrame(ttk.Frame):
 
@@ -93,6 +94,42 @@ class AirConductionFrame(ttk.Frame):
         self.play_button = ttk.Button(self, text=self.list_freq[self.freq_value] + "\n" + self.list_a[self.aten_value],
                                       style="start.TButton", width="8", padding=(10, 20, 10, 20), command=self.start)
         self.play_button.grid(row=2, column=2)
+
+        self.cursor1 = self.canvas.create_line(self.canvas.dict_cursorX['125 Hz'] - 5,
+                                               self.canvas.dict_cursorY['-10 dB HL'],
+                                               self.canvas.dict_cursorX['125 Hz'] + 5,
+                                               self.canvas.dict_cursorY['-10 dB HL'],
+                                               fill="#000000", width=2, tags="cursor1")
+        self.cursor2 = self.canvas.create_line(self.canvas.dict_cursorX['125 Hz'],
+                                               self.canvas.dict_cursorY['-10 dB HL'] - 5,
+                                               self.canvas.dict_cursorX['125 Hz'],
+                                               self.canvas.dict_cursorY['-10 dB HL'] + 5,
+                                               fill="#000000", width=2, tags="cursor1")
+
+        self.increase_button = ttk.Button(self, text="+ F", width="4", padding=(10, 10, 3, 10), command=self.inc_freq)
+        self.increase_button.grid(row=2, column=3)
+
+        # Row 3
+        self.signal_button = ttk.Button(self, text="S", width=2, padding=(10, 10, 3, 10), command=self.open)
+        self.signal_button.grid(row=3, column=1, pady=0)
+
+        self.increase_dB_button = ttk.Button(self, text="+5dB", width="5", padding=(10, 10, 4, 10), command=self.inc_5dB)
+        self.increase_dB_button.grid(row=3, column=2, pady=0)
+
+        self.masking_button = ttk.Button(self, text="M", width="2", padding=(10, 10, 3, 10), command=self.masking)
+        self.masking_button.grid(row=3, column=3, pady=0)
+
+        # Row 4
+        self.mark_button = ttk.Button(self, text=" X ", width="4", padding=(10, 10, 4, 10), command=self.mark)
+        self.mark_button.grid(row=4, column=1, pady=0)
+
+        self.img_basket = tk.PhotoImage(file=os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])),"images/basket.png"))
+        self.clean_button = ttk.Button(self, image=self.img_basket, padding=(6, 6, 6, 6), command=self.erase_marker)
+        self.clean_button.grid(row=4, column=2, pady=0)
+
+        self.img_export = tk.PhotoImage(file=os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])),"images/export.png"))
+        self.generate_button = ttk.Button(self, image=self.img_export, padding=(6, 6, 6, 6), command=self.generate_pdf)
+        self.generate_button.grid(row=4, column=3, pady=0)
 
 
     def start(self):
