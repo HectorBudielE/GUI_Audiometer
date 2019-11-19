@@ -50,6 +50,7 @@ class AirConductionFrame(ttk.Frame):
         self.masking = 0  # 0->Masking off, 1->Masking on
         self.start = 0 # 0->Signal ON, 1->Signal OFF
 
+        self.dialog_box = 0
 
         ttk.Style().configure("myblue.TButton", padding=(10, 10, 3, 10), foreground="#0000ff", justify=tk.CENTER)
         ttk.Style().configure("myblue2.TButton", padding=(10, 10, 3, 10), background="#0000ff", justify=tk.CENTER)
@@ -152,6 +153,21 @@ class AirConductionFrame(ttk.Frame):
 
             self.start = 1
 
+        elif (self.start == 1):
+            self.decrease_dB_button['state'] = NORMAL
+            self.decrease_button['state'] = NORMAL
+            self.increase_button['state'] = NORMAL
+            self.signal_button['state'] = NORMAL
+            self.increase_dB_button['state'] = NORMAL
+            self.masking_button['state'] = NORMAL
+            self.mark_button['state'] = NORMAL
+            self.clean_button['state'] = NORMAL
+            self.generate_button['state'] = NORMAL
+
+            self.play_button.configure(style="start.TButton")
+            self.start = 0
+            self.masking=0
+
 
     def left_ear(self):
         if(self.start == 0):
@@ -166,20 +182,79 @@ class AirConductionFrame(ttk.Frame):
             self.oido = 0
 
     def masking(self):
-        # Include action for Masking button
-        pass
+        if (self.masking == 0):
+            self.masking_button.configure(style="masking_on.TButton")
+            self.masking = 1
+        elif (self.masking == 1):
+            self.masking_button.configure(style="masking_off.TButton")
+            self.masking = 0
 
     def call_freq(self, *args):
-        pass
+        self.decrease_dB_button['state'] = DISABLED
+        self.increase_dB_button['state'] = NORMAL
+        self.canvas.after(1, self.canvas.delete, self.cursor1)
+        self.canvas.after(1, self.canvas.delete, self.cursor2)
+
+        if self.freq_value == 0:  # 125 Hz
+            self.list_a = self.list_a125
+        elif self.freq_value == 1:  # 250 Hz
+            self.list_a = self.list_a250
+        elif self.freq_value == 2:  # 500 Hz
+            self.list_a = self.list_a4000
+        elif self.freq_value == 3:  # 750 Hz
+            self.list_a = self.list_a4000
+        elif self.freq_value == 4:  # 1000 Hz
+            self.list_a = self.list_a4000
+        elif self.freq_value == 5:  # 1500 Hz
+            self.list_a = self.list_a4000
+        elif self.freq_value == 6:  # 2000 Hz
+            self.list_a = self.list_a4000
+        elif self.freq_value == 7:  # 3000 Hz
+            self.list_a = self.list_a4000
+        elif self.freq_value == 8:  # 4000 Hz
+            self.list_a = self.list_a4000
+        elif self.freq_value == 9:  # 6000 Hz
+            self.list_a = self.list_a6000
+        elif self.freq_value == 10:  # 8000 Hz
+            self.list_a = self.list_a250
+
+        self.aten_value = 0
+        self.play_button['text'] = self.List_freq[self.freq_value] + "\n" + self.ListA[self.aten_value]
+        self.aten = 0
+        self.CalldB()
 
     def call_dB(self, *args):
-        pass
+        sel = self.list_freq[self.freq_value]
+        sel2 = self.list_a[self.aten_value]
+
+        self.canvas.delete("cursor1")
+
+        self.cursor1 = self.canvas.create_line(self.canvas.dict_cursorX[sel] - 5, self.canvas.dict_cursorY[sel2],
+                                               self.canvas.dict_cursorX[sel] + 5, self.canvas.dict_cursorY[sel2],
+                                               fill="#000000", width=2, tags="cursor1")
+        self.cursor2 = self.canvas.create_line(self.canvas.dict_cursorX[sel], self.canvas.dict_cursorY[sel2] - 5,
+                                               self.canvas.dict_cursorX[sel], self.canvas.dict_cursorY[sel2] + 5,
+                                               fill="#000000", width=2, tags="cursor1")
 
     def inc_5dB(self):
-        pass
+        self.aten_value = self.aten_value + 1
+        if (self.aten_value == len(self.list_a) - 1):
+            self.increase_dB_button['state'] = DISABLED
+        if (self.aten_value == 1):
+            self.decrease_dB_button['state'] = NORMAL
+
+        self.play_button['text'] = self.list_freq[self.freq_value] + "\n" + self.list_a[self.aten_value]
+        self.call_dB()
 
     def dec_5dB(self):
-        pass
+        self.aten_value = self.aten_value - 1
+        if (self.aten_value == len(self.list_a) - 2):
+            self.increase_dB_button['state'] = NORMAL
+        if (self.aten_value == 0):
+            self.decrease_dB_button['state'] = DISABLED
+
+        self.play_button['text'] = self.list_freq[self.freq_value] + "\n" + self.list_a[self.aten_value]
+        self.call_dB()
 
     def inc_freq(self):
         pass
