@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import *
 from tkinter import ttk
 from canvas_file import FigureCanvas
 import os, sys
@@ -81,7 +82,7 @@ class AirConductionFrame(ttk.Frame):
 
         self.decrease_dB_button = ttk.Button(self, text="-5dB", width="5", padding=(10, 10, 4, 10), command=self.dec_5dB)
         self.decrease_dB_button.grid(row=1, column=2, padx=0)
-        #self.decrease_dB_button['state'] = DISABLED
+        self.decrease_dB_button["state"] = DISABLED
 
         self.left_button = ttk.Button(self, text=" L", width="2", style="myblue.TButton", command=self.left_ear)
         self.left_button.grid(row=1, column=3, padx=0)
@@ -89,7 +90,7 @@ class AirConductionFrame(ttk.Frame):
         # Row 2
         self.decrease_button = ttk.Button(self, text="- F", width="4", padding=(10, 10, 3, 10), command=self.dec_freq)
         self.decrease_button.grid(row=2, column=1)
-        #self.decrease_button['state'] = DISABLED
+        self.decrease_button['state'] = DISABLED
 
         self.play_button = ttk.Button(self, text=self.list_freq[self.freq_value] + "\n" + self.list_a[self.aten_value],
                                       style="start.TButton", width="8", padding=(10, 20, 10, 20), command=self.start)
@@ -120,7 +121,7 @@ class AirConductionFrame(ttk.Frame):
         self.masking_button.grid(row=3, column=3, pady=0)
 
         # Row 4
-        self.mark_button = ttk.Button(self, text=" X ", width="4", padding=(10, 10, 4, 10), command=self.mark)
+        self.mark_button = ttk.Button(self, text="X/O", width="4", padding=(10, 10, 4, 10), command=self.mark)
         self.mark_button.grid(row=4, column=1, pady=0)
 
         self.img_basket = tk.PhotoImage(file=os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])),"images/basket.png"))
@@ -133,13 +134,36 @@ class AirConductionFrame(ttk.Frame):
 
 
     def start(self):
-        pass
+        if (self.start == 0):
+            self.decrease_dB_button['state'] = DISABLED
+            self.decrease_button['state'] = DISABLED
+            self.increase_button['state'] = DISABLED
+            self.signal_button['state'] = DISABLED
+            self.increase_dB_button['state'] = DISABLED
+            self.masking_button['state'] = DISABLED
+            self.mark_button['state'] = DISABLED
+            self.clean_button['state'] = DISABLED
+            self.generate_button['state'] = DISABLED
+
+            if(self.ear == 0):  # right ear
+                self.play_button.configure(style="start_right.TButton")
+            elif(self.ear == 1):  # left ear
+                self.play_button.configure(style="start_left.TButton")
+
+            self.start = 1
+
 
     def left_ear(self):
-        pass
+        if(self.start == 0):
+            self.left_button.configure(style="myblue2.TButton")
+            self.right_button.configure(style="myred.TButton")
+            self.oido = 1
 
     def right_ear(self):
-        pass
+        if(self.start == 0):
+            self.left_button.configure(style="myblue.TButton")
+            self.right_button.configure(style="myred2.TButton")
+            self.oido = 0
 
     def masking(self):
         # Include action for Masking button
