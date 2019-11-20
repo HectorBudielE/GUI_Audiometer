@@ -219,9 +219,9 @@ class AirConductionFrame(ttk.Frame):
             self.list_a = self.list_a250
 
         self.aten_value = 0
-        self.play_button['text'] = self.List_freq[self.freq_value] + "\n" + self.ListA[self.aten_value]
+        self.play_button['text'] = self.list_freq[self.freq_value] + "\n" + self.list_a[self.aten_value]
         self.aten = 0
-        self.CalldB()
+        self.call_dB()
 
     def call_dB(self, *args):
         sel = self.list_freq[self.freq_value]
@@ -252,15 +252,26 @@ class AirConductionFrame(ttk.Frame):
             self.increase_dB_button['state'] = NORMAL
         if (self.aten_value == 0):
             self.decrease_dB_button['state'] = DISABLED
-
         self.play_button['text'] = self.list_freq[self.freq_value] + "\n" + self.list_a[self.aten_value]
         self.call_dB()
 
     def inc_freq(self):
-        pass
+        self.freq_value = self.freq_value + 1
+        if (self.freq_value == 10):
+            self.increase_button['state'] = DISABLED
+        if (self.freq_value == 1):
+            self.decrease_button['state'] = NORMAL
+        self.play_button['text'] = self.list_freq[self.freq_value] + "\n" + self.list_a[self.aten_value]
+        self.call_freq()
 
     def dec_freq(self):
-        pass
+        self.freq_value = self.freq_value - 1
+        if (self.freq_value == 0):
+            self.decrease_button['state'] = DISABLED
+        if (self.freq_value == 9):
+            self.increase_button['state'] = NORMAL
+        self.play_button['text'] = self.list_freq[self.freq_value] + "\n" + self.list_a[self.aten_value]
+        self.call_freq()
 
     def mark(self):
         pass
